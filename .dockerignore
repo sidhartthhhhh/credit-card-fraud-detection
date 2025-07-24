@@ -1,0 +1,24 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.venv
+venv/
+
+# Database file (should not be part of the image)
+predictions.db
+predictions.db-journal
+
+# Notebooks
+.ipynb_checkpoints
+notebooks/
+
+# IDE/Editor specific
+.idea/
+.vscode/
