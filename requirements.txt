@@ -1,5 +1,6 @@
 pandas
 numpy
+dash
 scikit-learn
 imbalanced-learn
 lightgbm
