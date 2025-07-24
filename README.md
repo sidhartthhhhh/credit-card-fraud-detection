@@ -3,6 +3,7 @@
 This project is a machine learning system to detect fraudulent credit card transactions. It uses a LightGBM classifier trained on a highly imbalanced dataset from Kaggle.
 
 ## Project Structure
+```bash
 
 credit-card-fraud-detection/
 │
@@ -19,7 +20,7 @@ credit-card-fraud-detection/
 ├── .gitignore
 ├── README.md
 └── requirements.txt
-
+```
 
 ## How to Run
 
@@ -32,12 +33,15 @@ git clone <your-repo-url>
 cd credit-card-fraud-detection
 pip install -r requirements.txt
 
+```
+
 2. Download Data
 Download the creditcard.csv dataset from Kaggle and place it inside the data/ directory.
 
 3. Train the Model
 Run the training script to process the data, train the LightGBM model, and save the artifacts (model and scaler) to the models/ directory.
 
+```bash
 
 # Navigate to the src directory
 cd src
@@ -52,6 +56,7 @@ Once the model is trained, start the Flask API to serve predictions.
 python app.py
 The API will be available at http://127.0.0.1:5000.
 
+```
 5. Make a Prediction
 You can send a POST request to the /predict endpoint with transaction data to get a fraud prediction.
 
