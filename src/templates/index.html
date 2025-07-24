@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraud Detection System</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f4f7f6; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .container { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
+        h1 { text-align: center; color: #2c3e50; }
+        form { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .form-group { display: flex; flex-direction: column; }
+        label { margin-bottom: 0.5rem; font-weight: bold; }
+        input { padding: 0.75rem; border: 1px solid #ccc; border-radius: 5px; font-size: 1rem; }
+        button { grid-column: 1 / -1; padding: 1rem; background-color: #3498db; color: white; border: none; border-radius: 5px; font-size: 1.1rem; cursor: pointer; transition: background-color 0.3s; }
+        button:hover { background-color: #2980b9; }
+        #result { margin-top: 1.5rem; padding: 1rem; border-radius: 5px; text-align: center; font-size: 1.2rem; font-weight: bold; white-space: pre-wrap; }
+        .result-safe { background-color: #e8f5e9; color: #2e7d32; }
+        .result-fraud { background-color: #ffebee; color: #c62828; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Fraud Detection System</h1>
+        <form id="prediction-form">
+            <div class="form-group"><label for="time">Time (seconds)</label><input type="number" id="time" name="Time" value="86300" required></div>
+            <div class="form-group"><label for="amount">Amount</label><input type="number" step="0.01" id="amount" name="Amount" value="7.99" required></div>
+            <div class="form-group"><label for="v14">V14</label><input type="number" step="any" id="v14" name="V14" value="-0.2" required></div>
+            <div class="form-group"><label for="v12">V12</label><input type="number" step="any" id="v12" name="V12" value="-1.8" required></div>
+            <div class="form-group"><label for="v10">V10</label><input type="number" step="any" id="v10" name="V10" value="-0.4" required></div>
+            <div class="form-group"><label for="v4">V4</label><input type="number" step="any" id="v4" name="V4" value="-0.3" required></div>
+            <button type="submit">Check Transaction</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('prediction-form').addEventListener('submit', async function (event) {
+            event.preventDefault(); // Prevent page reload
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = 'Analyzing...';
+            resultDiv.className = '';
+
+            // 1. Create the full payload object with default values of 0
+            const payload = {};
+            for (let i = 1; i <= 28; i++) {
+                payload[`V${i}`] = 0;
+            }
+
+            // 2. Overwrite defaults with values from the form
+            const formData = new FormData(event.target);
+            for (let [key, value] of formData.entries()) {
+                payload[key] = parseFloat(value);
+            }
+            
+            try {
+                // 3. Send data to the Flask API
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                // 4. Display the result
+                if (data.is_fraud === 1) {
+                    resultDiv.textContent = `Result: FRAUD\nProbability: ${(data.fraud_probability * 100).toFixed(2)}%`;
+                    resultDiv.className = 'result-fraud';
+                } else {
+                    resultDiv.textContent = `Result: NOT FRAUD\nProbability: ${(data.fraud_probability * 100).toFixed(4)}%`;
+                    resultDiv.className = 'result-safe';
+                }
+
+            } catch (error) {
+                resultDiv.textContent = `Error: ${error.message}`;
+                resultDiv.className = 'result-fraud';
+            }
+        });
+    </script>
+</body>
+</html>
