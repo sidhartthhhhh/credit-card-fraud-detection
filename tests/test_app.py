@@ -1,17 +1,31 @@
 import pytest
 import json
-from src.app import app as flask_app # Import your Flask app
+import os
+from src.app import app as flask_app, init_db # Import your Flask app and init_db
 
 @pytest.fixture
 def app():
     """Create and configure a new app instance for each test."""
-    # The flask_app is already configured, so we can just yield it
+    
+    # --- SETUP ---
+    # This ensures the database and table are created before tests run
+    with flask_app.app_context():
+        init_db()
+    
     yield flask_app
+    
+    # --- TEARDOWN ---
+    # Optional: clean up the database file after tests are done
+    # This runs in the root directory, so it won't touch the one in src/
+    if os.path.exists('predictions.db'):
+        os.remove('predictions.db')
+
 
 @pytest.fixture
 def client(app):
     """A test client for the app."""
     return app.test_client()
+
 
 def test_predict_endpoint_non_fraud(client):
     """
@@ -34,7 +48,7 @@ def test_predict_endpoint_non_fraud(client):
     )
 
     # ASSERT: Check if the response is correct
-    assert response.status_code == 200
+    assert response.status_code == 200 # This should now pass
     response_data = response.get_json()
     assert response_data['is_fraud'] == 0
     assert 'fraud_probability' in response_data
