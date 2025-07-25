@@ -1,48 +1,39 @@
-from flask import Flask, request, jsonify, render_template
-import joblib
-import pandas as pd
 import os
 import sqlite3
 from datetime import datetime
 
+import pandas as pd
+import joblib
+from flask import Flask, request, jsonify, render_template
+from flask_cors import CORS
+
+# Define paths
+MODEL_PATH = os.path.join(os.path.dirname(__file__), '..', 'models', 'lgbm_fraud_detector.pkl')
+SCALER_PATH = os.path.join(os.path.dirname(__file__), '..', 'models', 'robust_scaler.pkl')
+
 app = Flask(__name__)
+CORS(app)
 
-# --- Database Setup ---
-def init_db():
-    with sqlite3.connect('predictions.db') as conn:
-        cursor = conn.cursor()
-        cursor.execute('''
-            CREATE TABLE IF NOT EXISTS predictions (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                timestamp TEXT NOT NULL,
-                is_fraud INTEGER NOT NULL,
-                fraud_probability REAL NOT NULL
-            )
-        ''')
-        conn.commit()
-
-# --- Load Model and Scaler ---
-base_dir = os.path.dirname(os.path.abspath(__file__))
-model_path = os.path.join(base_dir, '..', 'models', 'lgbm_fraud_detector.pkl')
-scaler_path = os.path.join(base_dir, '..', 'models', 'robust_scaler.pkl')
-
+# Define lazy-loading variables
 model = None
+scaler = None
+
+# Load model only when needed
 def load_model():
     global model
     if model is None:
         try:
-            model = joblib.load(model_path)
+            model = joblib.load(MODEL_PATH)
         except FileNotFoundError:
             model = None
     return model
 
-scaler = None
-
+# Load scaler only when needed
 def load_scaler():
     global scaler
     if scaler is None:
         try:
-            scaler = joblib.load(scaler_path)
+            scaler = joblib.load(SCALER_PATH)
         except FileNotFoundError:
             scaler = None
     return scaler
