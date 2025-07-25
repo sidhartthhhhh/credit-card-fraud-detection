@@ -35,8 +35,11 @@ venv.bak/
 
 # Project-specific ignores
 models/
+!models/lgbm_fraud_detector.pkl
+
 .ipynb_checkpoints/
 
 #data
 
 *.csv
+
