@@ -2,6 +2,7 @@ import os
 import joblib
 import pandas as pd
 from flask import Flask, request, jsonify, render_template
+from src.app import app as flask_app
 
 # --- Define paths ---
 # These paths assume a 'models' directory exists at the same level as the 'src' directory
