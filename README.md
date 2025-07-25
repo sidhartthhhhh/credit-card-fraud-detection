@@ -61,6 +61,9 @@ The API will be available at http://127.0.0.1:5000.
 You can send a POST request to the /predict endpoint with transaction data to get a fraud prediction.
 
 Example using cURL:
+
+```bash
+
 curl -X POST -H "Content-Type: application/json" \
 -d '{
     "Time": 86300,
@@ -73,3 +76,5 @@ curl -X POST -H "Content-Type: application/json" \
     "Amount": 7.99
 }' \
 [http://127.0.0.1:5000/predict](http://127.0.0.1:5000/predict)
+
+```
