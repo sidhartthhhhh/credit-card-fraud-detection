@@ -36,10 +36,17 @@ def load_model():
             model = None
     return model
 
-try:
-    scaler = joblib.load(scaler_path)
-except FileNotFoundError:
-    scaler = None
+scaler = None
+
+def load_scaler():
+    global scaler
+    if scaler is None:
+        try:
+            scaler = joblib.load(scaler_path)
+        except FileNotFoundError:
+            scaler = None
+    return scaler
+
 
 # --- Feature Order ---
 FEATURE_ORDER = [
