@@ -25,7 +25,13 @@ def init_db():
 base_dir = os.path.dirname(os.path.abspath(__file__))
 model_path = os.path.join(base_dir, '..', 'models', 'lgbm_fraud_detector.pkl')
 scaler_path = os.path.join(base_dir, '..', 'models', 'robust_scaler.pkl')
-model = joblib.load(model_path)
+model = None
+
+def load_model():
+    global model
+    if model is None:
+        model = joblib.load(model_path)
+    return model
 scaler = joblib.load(scaler_path)
 
 # --- Feature Order ---
