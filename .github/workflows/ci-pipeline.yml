@@ -30,13 +30,7 @@ jobs:
       - name: Download model file
         run: |
           mkdir -p models
-          wget https://github.com/sidhartthhhhh/credit-card-fraud-detection/raw/master/models/lgbm_fraud_detector.pkl -O models/lgbm_fraud_detector.pkl
-
-      - name: Display app.py content
-        run: |
-          echo "--- Contents of src/app.py ---"
-          cat src/app.py
-          echo "------------------------------"
+          wget https://raw.githubusercontent.com/sidhartthhhhh/credit-card-fraud-detection/master/models/lgbm_fraud_detector.pkl -O models/lgbm_fraud_detector.pkl
 
       - name: Run tests
         run: |
