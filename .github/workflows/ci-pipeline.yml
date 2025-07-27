@@ -27,11 +27,13 @@ jobs:
           pip install -r requirements.txt
           pip install -r requirements-dev.txt
 
-      - name: Download model file
+      - name: Download model files
         run: |
           mkdir -p models
           wget https://raw.githubusercontent.com/sidhartthhhhh/credit-card-fraud-detection/master/models/lgbm_fraud_detector.pkl -O models/lgbm_fraud_detector.pkl
+          wget https://raw.githubusercontent.com/sidhartthhhhh/credit-card-fraud-detection/master/models/robust_scaler.pkl -O models/robust_scaler.pkl
 
+          
       - name: Run tests
         run: |
           pytest
