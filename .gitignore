@@ -1,9 +1,8 @@
-# Byte-compiled / optimized / C extensions
+
 __pycache__/
 *.py[cod]
 *$py.class
 
-# Distribution / packaging
 .Python
 build/
 develop-eggs/
@@ -24,7 +23,6 @@ share/python-wheels/
 *.egg
 MANIFEST
 
-# Virtual Environments
 .env
 .venv
 env/
@@ -33,13 +31,7 @@ ENV/
 env.bak/
 venv.bak/
 
-# Project-specific ignores
-models/
-!models/lgbm_fraud_detector.pkl
 
 .ipynb_checkpoints/
-
-#data
-
 *.csv
 
