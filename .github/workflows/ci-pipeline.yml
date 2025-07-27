@@ -27,6 +27,11 @@ jobs:
           pip install -r requirements.txt
           pip install -r requirements-dev.txt
 
+      - name: Download model file
+        run: |
+          mkdir -p models
+          wget https://github.com/sidhartthhhhh/credit-card-fraud-detection/raw/master/models/lgbm_fraud_detector.pkl -O models/lgbm_fraud_detector.pkl
+
       - name: Display app.py content
         run: |
           echo "--- Contents of src/app.py ---"
