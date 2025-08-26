@@ -1,5 +1,5 @@
 artifact_uri: file:///C:/Users/singh/Desktop/Projects/Credit%20%20Card%20Fraud%20Detection/mlruns/407036675740825992/0990b81477b742dbb50dcddb44a6b250/artifacts
-end_time: null
+end_time: 1756232703176
 entry_point_name: ''
 experiment_id: '407036675740825992'
 lifecycle_stage: active
@@ -9,6 +9,6 @@ source_name: ''
 source_type: 4
 source_version: ''
 start_time: 1756232651330
-status: 1
+status: 3
 tags: []
 user_id: singh

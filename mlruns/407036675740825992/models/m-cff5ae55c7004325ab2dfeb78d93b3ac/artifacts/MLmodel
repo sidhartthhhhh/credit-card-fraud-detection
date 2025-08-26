@@ -1,0 +1,21 @@
+artifact_path: file:///C:/Users/singh/Desktop/Projects/Credit%20%20Card%20Fraud%20Detection/mlruns/407036675740825992/models/m-cff5ae55c7004325ab2dfeb78d93b3ac/artifacts
+flavors:
+  lightgbm:
+    code: null
+    data: model.pkl
+    lgb_version: 4.6.0
+    model_class: lightgbm.sklearn.LGBMClassifier
+  python_function:
+    data: model.pkl
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.lightgbm
+    python_version: 3.10.0
+mlflow_version: 3.3.1
+model_id: m-cff5ae55c7004325ab2dfeb78d93b3ac
+model_size_bytes: 2760924
+model_uuid: m-cff5ae55c7004325ab2dfeb78d93b3ac
+prompts: null
+run_id: 0990b81477b742dbb50dcddb44a6b250
+utc_time_created: '2025-08-26 18:24:43.499026'
