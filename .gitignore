@@ -35,3 +35,4 @@ venv.bak/
 .ipynb_checkpoints/
 *.csv
 
+mlruns/
